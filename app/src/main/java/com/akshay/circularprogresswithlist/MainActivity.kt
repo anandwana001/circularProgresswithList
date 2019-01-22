@@ -12,10 +12,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setCountDownTimer(minutes = 1)
+        setCountDownTimer(minutes = 1, repetitions = 2)
     }
 
-    private fun setCountDownTimer(minutes: Int) {
+    private fun setCountDownTimer(minutes: Int, repetitions: Int) {
+        var repetition = repetitions
         progressBar.max = minutes * 60 * 1000
         val mCountDownTimer = object : CountDownTimer((minutes * 60 * 1000).toLong(), 1) {
             override fun onTick(millisUntilFinished: Long) {
@@ -23,6 +24,10 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onFinish() {
+                repetition--
+                if (repetition != 0) {
+                    this.start()
+                }
                 Toast.makeText(this@MainActivity, "Times Up", Toast.LENGTH_LONG).show()
             }
         }
